@@ -4,7 +4,8 @@
   "description": "Esse repositório é destinado para o desenvolvimento de uma aplicação mobile que terá como funcionalidade principal o agendamento e pagamento de cortes de cabelo",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
   },
   "author": "",
   "license": "ISC",
