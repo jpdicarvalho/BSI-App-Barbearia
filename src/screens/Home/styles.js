@@ -17,19 +17,20 @@ export const HeaderArea = styled.View`
     align-items: center;
 `;
 export const HeaderTitle = styled.Text`
+    margin-top: 50px;
     width: 250px;
     font-size: 24px;
     font-weight: bold;
-    color: #FFF;
+    color: #AE31FF;
 `;
 export const SearchButton = styled.TouchableOpacity`
     width: 26px;
     height: 26px;
-    color: #2F3243;
+    color: #AE31FF;
 `;
 
 export const LocationArea = styled.View`
-    background-color: #4EADBE;
+    background-color: #AE31FF;
     height: 60px;
     border-radius: 30px;
     flex-direction: row;
@@ -41,7 +42,7 @@ export const LocationArea = styled.View`
 export const LocationInput = styled.TextInput`
     flex: 1;
     font-size: 16px;
-    color: #2F3243;
+    color: #FFF;
 `;
 export const LocationFinder = styled.TouchableOpacity`
     width: 24px;

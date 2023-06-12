@@ -1,10 +1,7 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { Text } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
-import { UserContext } from '../../contexts/UserContext';
-
+import { Text, Alert } from 'react-native';
+import config from '../../../config/config.json'
 import BarberLogo from '../../assets/barber.svg';
 
 import {
@@ -17,52 +14,49 @@ import {
     SignMessageButtonTextBold
 } from './styles';
 
-import Api from '../../Api';
-
 import SignInput from '../../components/SignInput';
 import EmailIcon from '../../assets/email.svg';
 import LockIcon from '../../assets/lock.svg';
 
-export default () => {
-    const { dispatch: userDispatch } = useContext(UserContext);
-
+export default function Login() {
+      
     const navigation = useNavigation();
-
-    const [emailField, setEmailField] = useState('');
-    const [passwordField, setPasswordField] = useState('');
-
-    const handleSignClick = async () => {
-        if(emailField != '' && passwordField != '') {
-
-            let json = await Api.signIn(emailField, passwordField);
-
-            if(json.token) {
-                await AsyncStorage.setItem('token', json.token);
-
-                userDispatch({
-                    type: 'setAvatar',
-                    payload:{
-                        avatar: json.data.avatar
-                    }
-                });
-
-                navigation.reset({
-                    routes:[{name:'MainTab'}]
-                });
-            } else {
-                alert('E-mail e/ou senha errados!');
-            }
-
-        } else {
-            alert("Preencha os campos!");
-        }
-    }
-
     const handleMessageButtonClick = () => {
         navigation.reset({
             routes: [{name: 'SignUp'}]
         });
     }
+    const [password, setPassword]=useState(null);
+    const [email, setEmail]=useState(null);
+     //send data for form
+     async function sendForm(){
+        try {
+            let response = await fetch(`${config.urlRoot}login`, {
+                method: 'POST',
+                headers: {
+                  Accept: 'application/json',
+                  'Content-type': 'application/json'
+                },
+                body: JSON.stringify({
+                  password: password,
+                  email: email
+                })
+              });
+        
+              if (response) {
+                // Cadastro realizado com sucesso
+                Alert.alert('Sucesso', 'usuário encontrado!', [
+                    { text: 'OK', onPress: () => navigation.navigate('MainTab') }
+                  ]);
+              } else {
+                // Ocorreu um erro no cadastro
+                Alert.alert('Erro', 'Usuário não encontrado.');
+              }
+        } catch (error) {
+            console.error('Erro ao buscar usuário:', error);
+            Alert.alert('Erro', 'Erro ao encontrar o usuário.');
+        }
+    } 
 
     return (
         <Container>
@@ -76,20 +70,17 @@ export default () => {
             <SignInput
                     IconSvg={EmailIcon}
                     placeholder="Endereço de e-mail"
-                    value={emailField}
-                   onChangeText={t=>setEmailField(t)}
-                
+                    onChangeText={text=>setEmail(text)}
                 />
 
             <SignInput
                     IconSvg={LockIcon}
                     placeholder="Digite sua senha"
-                    value={passwordField}
-                    onChangeText={t=>setPasswordField(t)}
-                    password={true}s                
+                    password={true}
+                    onChangeText={text=>setPassword(text)}
                 />
 
-                <CustomButton onPress={handleSignClick}>
+                <CustomButton onPress={()=>sendForm()}>
                     <CustomButtonText>ENTRAR</CustomButtonText>
                 </CustomButton>
             </InputArea>

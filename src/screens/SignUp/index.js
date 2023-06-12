@@ -1,9 +1,8 @@
 import React, { useState, useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { Text } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
-import { UserContext } from '../../contexts/UserContext';
+import { View, Text, Button, Alert } from 'react-native';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import config from "../../../config/config.json";
 
 import {
     Container,
@@ -17,97 +16,87 @@ import {
 
 import SignInput from '../../components/SignInput';
 
-import Api from '../../Api';
-
 import BarberLogo from '../../assets/barber.svg';
 import PersonIcon from '../../assets/person.svg';
 import EmailIcon from '../../assets/email.svg';
 import LockIcon from '../../assets/lock.svg';
 
-export default () => {
-    const { dispatch: userDispatch } = useContext(UserContext);
+export default function CadastroUser() {
     const navigation = useNavigation();
-
-    const [nameField, setNameField] = useState('');
-    const [emailField, setEmailField] = useState('');
-    const [passwordField, setPasswordField] = useState('');
-
-    const handleSignClick = async () => {
-        if(nameField != '' && emailField != '' && passwordField != '') {
-            let res = await Api.signUp(nameField, emailField, passwordField);
-            
-            if(res.token) {
-                await AsyncStorage.setItem('token', res.token);
-
-                userDispatch({
-                    type: 'setAvatar',
-                    payload:{
-                        avatar: res.data.avatar
-                    }
-                });
-
-                navigation.reset({
-                    routes:[{name:'MainTab'}]
-                });
-
-            } else {
-                alert("Erro: "+res.error);
-            }
-        } else {
-            alert("Preencha os campos");
+    
+    const [user, setUser] = useState (null);
+    const [password, setPassword]=useState(null);
+    const [email, setEmail]=useState(null);
+    
+     //send data for form
+     async function sendForm(){
+        try {
+            let response = await fetch(`${config.urlRoot}create`, {
+                method: 'POST',
+                headers: {
+                  Accept: 'application/json',
+                  'Content-type': 'application/json'
+                },
+                body: JSON.stringify({
+                  name: user,
+                  password: password,
+                  email: email
+                })
+              });
+        
+              if (response.status === 201) {
+                // Cadastro realizado com sucesso
+                Alert.alert('Sucesso', 'Cadastro realizado com sucesso!', [
+                    { text: 'OK', onPress: () => navigation.navigate('SignIn') }
+                  ]);
+              } else {
+                // Ocorreu um erro no cadastro
+                Alert.alert('Erro', 'Ocorreu um erro ao cadastrar o usuário.');
+              }
+        } catch (error) {
+            console.error('Erro ao cadastrar usuário:', error);
+            Alert.alert('Erro', 'Ocorreu um erro ao cadastrar o usuário.');
         }
-    }
-
-    const handleMessageButtonClick = () => {
-        navigation.reset({
-            routes: [{name: 'SignIn'}]
-        });
-    }
+    } 
 
     return (
-        <Container>
-            <BarberLogo width= "100%" height="100" />
-            <Text 
-            style={{fontWeight: 'bold',fontSize: 20, color: "#fff", marginTop:20}}>Bem Vindo</Text>
-            <Text 
-            style={{fontWeight: 'bold',fontSize: 12, color: "#fff", marginTop:5}}>Faça login</Text>
-            
-            <InputArea>
-
-            <SignInput
-                    IconSvg={PersonIcon}
-                    placeholder="Digite seu nome"
-                    value={emailField}
-                   onChangeText={t=>setEmailField(t)}
+        
+            <Container>
+                <BarberLogo width= "100%" height="100" />
+                <Text 
+                style={{fontWeight: 'bold',fontSize: 20, color: "#fff", marginTop:20}}>Bem Vindo</Text>
+                <Text 
+                style={{fontWeight: 'bold',fontSize: 12, color: "#fff", marginTop:5}}>Cadastre-se</Text>
                 
-                />
+                <InputArea>
+                <SignInput
+                        IconSvg={PersonIcon}
+                        placeholder="Nome de usuário" 
+                        onChangeText={text=>setUser(text)}
+                    />
+                    <SignInput
+                        IconSvg={EmailIcon}
+                        placeholder="Endereço de e-mail" 
+                        onChangeText={text=>setEmail(text)}
+                    />
 
-            <SignInput
-                    IconSvg={EmailIcon}
-                    placeholder="Endereço de e-mail"
-                    value={nameField}
-                   onChangeText={t=>setNameField(t)}
-                
-                />
+                <SignInput
+                        IconSvg={LockIcon}
+                        placeholder="Digite sua senha"
+                        password={true}
+                        onChangeText={text=>setPassword(text)}             
+                    />
 
-            <SignInput
-                    IconSvg={LockIcon}
-                    placeholder="Digite sua senha"
-                    value={passwordField}
-                    onChangeText={t=>setPasswordField(t)}
-                    password={true}s                
-                />
+                    <CustomButton onPress={()=>sendForm()}>
+                        <CustomButtonText>Cadastrar</CustomButtonText>
+                    </CustomButton>
+                </InputArea>
 
-                <CustomButton onPress={handleSignClick}>
-                    <CustomButtonText>Cadastrar</CustomButtonText>
-                </CustomButton>
-            </InputArea>
+                <SignMessageButton >
+                    <SignMessageButtonText>Já tem uma conta?</SignMessageButtonText>
+                    <SignMessageButtonTextBold>Faça login!</SignMessageButtonTextBold>
+                </SignMessageButton>
 
-            <SignMessageButton onPress={handleMessageButtonClick}>
-                <SignMessageButtonText>Já tem uma conta?</SignMessageButtonText>
-                <SignMessageButtonTextBold>Faça login!</SignMessageButtonTextBold>
-            </SignMessageButton>
-
-        </Container>
-    );
-}
+            </Container>
+        );
+    }
