@@ -26,6 +26,7 @@ export default function Login() {
             routes: [{name: 'SignUp'}]
         });
     }
+    
     const [password, setPassword]=useState(null);
     const [email, setEmail]=useState(null);
      //send data for form

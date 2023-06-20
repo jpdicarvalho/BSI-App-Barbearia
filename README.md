@@ -20,7 +20,7 @@ Diagrama do banco de dados:
 
 Documentation Aeasy
 
-Importações feitas para o Front-End
+Importações feitas
 0 - npx react-native init app
 "O projeto foi criado em react-native, esse comando não é necessário"
 
@@ -59,25 +59,3 @@ Importações feitas para o Front-End
 16 - npm install firebase
 
 17 - npm install --save react-firebase-hooks
-##########################################
-
-Importações feitas para o Back-End
-
-npm install express --save
-npm instal -g express
-npm instal -g cors
-npm instal express
-npm instal --save sequelize
-npm instal --save mysql2
-npm install --save-dev sequelize-cli
-npx sequelize-cli init
-npm install --save-dev nodemon
-
-criando tabelas do banco Mysql:
-obs: tem que criar o banco no phpmyadmin
-
-npx sequelize-cli model:generate --name users --attributes name:string,password:string,email:string
-npx sequelize-cli db:migrate
-
-async - storage install
-npm install @react-native-async-storage/async-storage

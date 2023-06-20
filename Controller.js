@@ -9,6 +9,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(bodyParser.json());
 let user = models.users;
+let barbearia = models.barbearia;
 
 //Cadastrando usuário falta validar
 app.post('/create', async (req,res) =>{
@@ -64,68 +65,21 @@ app.get('/login', async (req, res) => {
       }
     });
 
-app.get('/read', async(req, res)=>{
+app.get('/list', async(req, res)=>{
     try {
-        //falta buscar as barbearias cadastradas
-        
-    } catch (error) {
-        
-    }
+        // Realizar a consulta ao banco de dados para obter os registros desejados
+        const users = await barbearia.findAll();
+    
+        // Retornar os registros encontrados como resposta
+        return res.json(users);
+      } catch (error) {
+        console.error('Erro ao obter os registros:', error);
+        return res.status(500).json({ error: 'Ocorreu um erro ao obter os registros.' });
+      }
 });
+
+
 let port = process.env.PORT || 3000;
 app.listen(port, (req, res) =>  {
     console.log('servidor rodando');    
 });
-
-
-/*
-//verificando usuário
-app.post('/login', async (req,res) =>{
-    let response = await user.findOne({
-        where:{name:req.body.name, password:req.body.password}
-    });
-    if(response === null){
-        res.send(JSON.stringify('error'));
-    }else{
-        res.send(response);
-    }
-});*/
-
-/*
-let barbearia = models.barbearia;
-app.get('/listar', async (req, res) => {
-    try {
-      const barbearias = await barbearia.findAll();
-      res.json(barbearias);
-      console.log(barbearias);
-    } catch (error) {
-      res.send('Erro ao listar as barbearias!');
-    }
-  });*/
-  
-/*
-app.get('/read', async (req, res) => {
-    let read = await user.findAll({
-        raw:true,
-    });
-    res.send('read done!');
-
-    console.log(read);
-});
-
-app.get('/update', async (req, res) => {
-    let update = await user.findByPk(2).then((response)=>{
-        response.name='joao pedro braga';
-        response.password='abc123rxj';
-        response.save();
-    });
-    res.send('update done!');
-});
-//
-app.get('/delete', async (req, res) => {
-        user.destroy({
-            where: {id:2}
-        });
-    res.send('delete done!');
-});
-*/

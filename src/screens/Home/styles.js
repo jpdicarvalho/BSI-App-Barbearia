@@ -38,6 +38,7 @@ export const LocationArea = styled.View`
     padding-left: 20px;
     padding-right: 20px;
     margin-top: 30px;
+    margin-bottom: 10px;
 `;
 export const LocationInput = styled.TextInput`
     flex: 1;
