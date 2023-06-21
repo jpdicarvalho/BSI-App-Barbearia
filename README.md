@@ -26,36 +26,44 @@ Importações feitas
 
 1- npm install styled-components@5    
 "Foi usado o '@5' por conta dos caracteres turcos, em algumas máquinas não será necessário"
-
 2- npm install @react-navigation/native
-
 3- npm install react-native-screens react-native-safe-area-context
-
 4- npm install @react-navigation/stack
-
 5- npm install @react-navigation/bottom-tabs
-
 6- npm install @react-native-async-storage/async-storage
-
 7- npm install @react-native-community/geolocation
-
 8- npm install react-native-permissions
-
 9- npm install react-native-swiper
-
 10- npm install react-native-svg
-
 11- npm install react-native-svg-transformer
-
 12- npm i react-native-svg-transformer
-
 13- npm add --dev react-native-svg-transformer
-"Só adicionei por causa da documentação, não sei se funciona sem isso"
-
 14- npm install react-native-svg
-
 15- npm add --dev react-native-svg-transformer -D
-
 16 - npm install firebase
-
 17 - npm install --save react-firebase-hooks
+
+Dependências necessárias para o back-end:
+
+npm install express --save
+npm install -g express
+npm install -g cors
+npm install express
+npm install --save sequelize
+npm install --save mysql2
+npm install --save-dev sequelize-cli
+npx sequelize-cli init
+npm install --save-dev nodemon
+
+Criando bd:
+tabela 'users':
+npx sequelize-cli model:generate --name users --attributes name:string,password:string,email:string
+
+tabela 'barbearia':
+npx sequelize-cli model:generate --name Newbarbearia --attributes name:string,password:string,email:string,funcionario:string,endereco:string,cortes:string,img:string,setenhalf:string,oitohalf:string,novehalf:string,dezhalf:string,onzehalf:string
+
+comando para importar as tabelas
+npx sequelize-cli db:migrate
+
+async - storage install
+npm install @react-native-async-storage/async-storage
