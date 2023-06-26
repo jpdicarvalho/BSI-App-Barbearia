@@ -1,0 +1,36 @@
+Dependências necessárias para o back-end:
+
+npm install express --save
+npm install -g express
+npm install -g cors
+npm install express
+npm install --save sequelize
+npm install --save mysql2
+npm install --save-dev sequelize-cli
+npx sequelize-cli init
+npm install --save-dev nodemon
+
+criando bd:
+tabela 'users':
+npx sequelize-cli model:generate --name servicos --attributes name:string,preco:string,barbearia_id:string
+tabela 'barbearia':
+npx sequelize-cli model:generate --name Newbarbearia --attributes name:string,password:string,email:string,funcionario:string,endereco:string,cortes:string,img:string,setenhalf:string,oitohalf:string,novehalf:string,dezhalf:string,onzehalf:string
+comando para importar as tabelas
+npx sequelize-cli db:migrate
+
+async - storage install
+npm install @react-native-async-storage/async-storage
+
+react-navegation
+npm install @react-navigation/native
+
+native-stack
+npm install @react-navigation/native-stack
+
+npx sequelize-cli model:generate --name users --attributes name:string,password:string,email:string
+npx sequelize-cli db:migrate
+
+
+npx sequelize-cli model:generate --name Servico --attributes nome:string,preco:decimal,barbeariaId:integer
+npx sequelize-cli model:generate --name Horario --attributes horario:date,servicoId:integer,barbeariaId:integer
+
