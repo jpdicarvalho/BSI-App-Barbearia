@@ -104,3 +104,5 @@ Bom, após baixar o Xampp, criar um BD com o nome 'barbeasy', criar as tabelas p
 "urlRoot":"http://192.168.1.4:3000/"
 
 O que vai mudar é apenas o IP '192.168.1.4' que o expo cria a cada start.
+
+Link da Apresentação Final: https://www.canva.com/design/DAFm8wXqIdE/o3lbKu5OYsfDIWYwo7iDnQ/edit?utm_content=DAFm8wXqIdE&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
