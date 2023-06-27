@@ -56,14 +56,19 @@ npx sequelize-cli init
 npm install --save-dev nodemon
 
 Criando bd:
-tabela 'users':
+Passo_1: Instalar o Xampp
+Passo_2: Criar um Banco de Dados com o nome 'barbeasy'
+Passo_3: execultar os comandos abaixo no terminal para criar as tabelas 'users', 'barbearia' e 'horarios', respectivamente:
 npx sequelize-cli model:generate --name users --attributes name:string,password:string,email:string
+npx sequelize-cli model:generate --name barbearia --attributes name:string,password:string,email:string,funcionario:string,endereco:string,cortes:string,img:string,setenhalf:string,oitohalf:string,novehalf:string,dezhalf:string,onzehalf:string
+npx sequelize-cli model:generate --name horarios --attributes horario:string,barbeariaId:integer
 
-tabela 'barbearia':
-npx sequelize-cli model:generate --name Newbarbearia --attributes name:string,password:string,email:string,funcionario:string,endereco:string,cortes:string,img:string,setenhalf:string,oitohalf:string,novehalf:string,dezhalf:string,onzehalf:string
 
-comando para importar as tabelas
+comando para migrar as tabelas para o Xampp
 npx sequelize-cli db:migrate
 
-async - storage install
-npm install @react-native-async-storage/async-storage
+Bom, após baixar o Xampp, criar um BD com o nome 'barbeasy', criar as tabelas pelo terminal e migrar, é necessário que no arquivo config/config.json altere o "urlRoot": passando o endereço IP gerado pelo expo. Veja abaixo, a implementação correta: 
+
+"urlRoot":"http://192.168.1.4:3000/"
+
+O que vai mudar é apenas o IP '192.168.1.4' que o expo cria a cada start.
