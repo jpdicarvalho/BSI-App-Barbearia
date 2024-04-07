@@ -1,4 +1,5 @@
 # Aeasy
+## versão 0.1 do Barbeasy
 
 Discentes: Luydi Bentes, João Pedro
        
