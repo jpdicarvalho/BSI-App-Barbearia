@@ -18,5 +18,3 @@ Prototipação Web: Essa será a visão do adiministrador, no caso a barbearia, 
 
 Diagrama do banco de dados:
 ![image](https://user-images.githubusercontent.com/81865020/234395281-09446eaa-d03c-4daf-bb10-b24f0c11c911.png)
-
-Documentation Aeasy
