@@ -1,7 +1,7 @@
-# Aeasy
-## versão 0.1 do Barbeasy
+# Barbeasy
+## versão 0.1
 
-Discentes: Luydi Bentes, João Pedro
+Author: João Pedro
        
 Easy scheduling app for barbershops
 
